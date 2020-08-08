@@ -1,14 +1,16 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `Stop Fake Tweets`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `KMac`,
+      summary: `who lives and works near San Francisco building useful things.`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
+    description: `A site demonstrating immutable Tweets.`,
     siteUrl: `https://gatsby-starter-blog-demo.netlify.app/`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `i001962`,
+      url: `https://example.com`,
+      name: `i001962`,
     },
   },
   plugins: [
@@ -19,6 +21,11 @@ module.exports = {
         name: `blog`,
       },
     },
+    { resolve: `gatsby-source-memphisio`,
+    options: {
+      // set yours up in .env file - only Published Collections are retrieved
+    }
+  },
     {
       resolve: `gatsby-source-filesystem`,
       options: {

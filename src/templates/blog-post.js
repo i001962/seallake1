@@ -7,15 +7,16 @@ import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
 
 const BlogPostTemplate = ({ data, pageContext, location }) => {
-  const post = data.markdownRemark
+  const post = data
+  console.log(post)
   const siteTitle = data.site.siteMetadata.title
   const { previous, next } = pageContext
 
   return (
     <Layout location={location} title={siteTitle}>
       <SEO
-        title={post.frontmatter.title}
-        description={post.frontmatter.description || post.excerpt}
+        title={post.sealLakeEnvs.envelope.retrievalId}
+        description={post.sealLakeEnvs.envelope.name}
       />
       <article>
         <header>
@@ -25,7 +26,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
               marginBottom: 0,
             }}
           >
-            {post.frontmatter.title}
+            {post.sealLakeEnvs.envelope.name}
           </h1>
           <p
             style={{
@@ -34,10 +35,10 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
               marginBottom: rhythm(1),
             }}
           >
-            {post.frontmatter.date}
+            {post.sealLakeEnvs.seal.isComplete}
           </p>
         </header>
-        <section dangerouslySetInnerHTML={{ __html: post.html }} />
+        <section dangerouslySetInnerHTML={{ __html: post.sealLakeEnvs.envelope.name }} />
         <hr
           style={{
             marginBottom: rhythm(1),
@@ -61,14 +62,14 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
           <li>
             {previous && (
               <Link to={previous.fields.slug} rel="prev">
-                ← {previous.frontmatter.title}
+                ← {previous.envelope.name}
               </Link>
             )}
           </li>
           <li>
             {next && (
               <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} →
+                {next.envelope.name} →
               </Link>
             )}
           </li>
@@ -87,14 +88,19 @@ export const pageQuery = graphql`
         title
       }
     }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      id
-      excerpt(pruneLength: 160)
-      html
-      frontmatter {
-        title
-        date(formatString: "MMMM DD, YYYY")
-        description
+    sealLakeEnvs ( fields: { slug: { eq: $slug } }) {
+      envelope {
+        dataHash
+        envelopeId
+        metadata{storage {
+          url
+          contenttype
+        }}
+        name
+        retrievalId
+      }
+      seal {
+        isComplete
       }
     }
   }

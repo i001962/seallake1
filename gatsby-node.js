@@ -6,24 +6,33 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const result = await graphql(
-    `
-      {
-        allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: DESC }
-          limit: 1000
-        ) {
-          edges {
-            node {
-              fields {
-                slug
+    `{
+      allSealLakeEnvs {
+        edges {
+          node {
+            fields {
+              slug
+            }
+            envelope {
+              dataHash
+              name
+              retrievalId
+              owner
+              storage {
+                contenttype
+                url
               }
-              frontmatter {
-                title
+              metadata {
+                storage {
+                  url
+                  contenttype
+                }
               }
             }
           }
         }
       }
+    }
     `
   )
 
@@ -32,7 +41,7 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 
   // Create blog posts pages.
-  const posts = result.data.allMarkdownRemark.edges
+  const posts = result.data.allSealLakeEnvs.edges
 
   posts.forEach((post, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node
@@ -53,12 +62,14 @@ exports.createPages = async ({ graphql, actions }) => {
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
-  if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
+  if (node.internal.type === `sealLakeEnvs`) {
+    const value = node.envelope.retrievalId
+    // const value = createFilePath({ node, getNode })
+
     createNodeField({
       name: `slug`,
       node,
-      value,
+      value: `/${value}`,
     })
   }
 }

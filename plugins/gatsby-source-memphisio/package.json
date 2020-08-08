@@ -1,0 +1,17 @@
+{
+  "name": "gatsby-source-memphisio",
+  "version": "1.0.0",
+  "description": "Get Memphis Data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "md5": "^2.2.1",
+    "node-fetch": "^2.3.0",
+    "query-string": "^6.2.0"
+  }
+}
