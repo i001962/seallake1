@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 const queryString = require('query-string');
-const md5 = require('md5');
 
 exports.sourceNodes = async ({
   actions,
